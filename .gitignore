@@ -70,5 +70,8 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
+# ReUniter plugin data
+/[Aa]ssets/.reuniter_data
+
 # Mac .DS_Store
 **/.DS_Store
