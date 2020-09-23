@@ -13,6 +13,9 @@ public class PlayerAnimator : MonoBehaviour
 	
 	private float elapsed = 0.0f;
 	
+	private float speed_x = 0.5f;
+	private float speed_y = 0.0f;
+	
     // Start is called before the first frame update
     void Start()
 	{
@@ -26,7 +29,7 @@ public class PlayerAnimator : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
+	{	
 	    elapsed += Time.deltaTime;
 	    
 	    if(elapsed >= 1.0f / frame_rate)
@@ -42,5 +45,38 @@ public class PlayerAnimator : MonoBehaviour
 	    	
 	    	sprite_renderer.sprite = all_frames[frame_index];
 	    }
+	 
+		Vector3 scale, position;
+		
+		scale = gameObject.transform.localScale;
+		position = gameObject.transform.position;
+		
+		scale.x = (speed_x > 0.0f)? -Mathf.Abs(scale.x) : Mathf.Abs(scale.x);
+		position.x += speed_x * Time.deltaTime;
+		position.y += speed_y * Time.deltaTime;
+		
+		gameObject.transform.localScale = scale;
+		gameObject.transform.position = position;
+		
+		if(speed_x > 0.0f && position.x > -2.25f)
+		{
+			speed_x = 0.0f;
+			speed_y = 0.5f;
+		}
+		else if(speed_y > 0.0f && position.y > 3.88f)
+		{
+			speed_x = -0.5f;
+			speed_y = 0.0f;
+		}
+		else if(speed_x < 0.0f && position.x < -3.7f)
+		{
+			speed_x = 0.0f;
+			speed_y = -0.5f;
+		}
+		else if(speed_y < 0.0f && position.y < 1.85f)
+		{
+			speed_x = 0.5f;
+			speed_y = 0.0f;
+		}
     }
 }

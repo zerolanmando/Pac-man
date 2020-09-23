@@ -37,12 +37,11 @@ public class PlayerAnimator_Dead : MonoBehaviour
 	    	
 			if(frame_index >= all_frames.Length)
 			{
-				gameObject.SetActive(false);
+				frame_index = 0;
+				// gameObject.SetActive(false);
 			}
-			else
-			{
-				sprite_renderer.sprite = all_frames[frame_index];
-			}
+			
+			sprite_renderer.sprite = all_frames[frame_index];
 		}
 	}
 }

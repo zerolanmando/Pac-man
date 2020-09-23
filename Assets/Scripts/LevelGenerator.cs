@@ -250,6 +250,67 @@ public class LevelGenerator : MonoBehaviour
 		}
 	}
 	
+	private void create_player(int full_row, int full_col, int r, int c, float view_scale, float size_scale)
+	{
+		Vector3 pos = new Vector3((c - (full_col * 0.5f)) * view_scale, (r - (full_row * 0.5f)) * view_scale, 0.0f);
+		create_map_element("templates/characters/player/player", pos, size_scale);
+	}
+	
+	private void create_ghosts(int full_row, int full_col, int r, int c, float view_scale, float size_scale)
+	{
+		Vector3 pos = new Vector3(((c - 2) - (full_col * 0.5f)) * view_scale, (r - (full_row * 0.5f)) * view_scale, 0.0f);
+		create_map_element("templates/characters/enemies/enemy1", pos, size_scale);
+
+		pos = new Vector3(((c + 2) - (full_col * 0.5f)) * view_scale, (r - (full_row * 0.5f)) * view_scale, 0.0f);
+		create_map_element("templates/characters/enemies/enemy2", pos, size_scale);
+
+		pos = new Vector3(((c - 2) - (full_col * 0.5f)) * view_scale, ((r + 2) - (full_row * 0.5f)) * view_scale, 0.0f);
+		create_map_element("templates/characters/enemies/enemy3", pos, size_scale);
+
+		pos = new Vector3((c - (full_col * 0.5f)) * view_scale, ((r + 2) - (full_row * 0.5f)) * view_scale, 0.0f);
+		create_map_element("templates/characters/enemies/enemy4", pos, size_scale);
+
+		pos = new Vector3((c - (full_col * 0.5f)) * view_scale, (r - (full_row * 0.5f)) * view_scale, 0.0f);
+		create_map_element("templates/characters/enemies/enemy_scared", pos, size_scale);
+	}
+	
+	private void create_life_indicator(int full_row, int full_col, int r, int c, float view_scale, float size_scale)
+	{
+		Vector3 pos = new Vector3((c - (full_col * 0.5f)) * view_scale, (r - (full_row * 0.5f)) * view_scale, 0.0f);
+		create_map_element("templates/items/life", pos, size_scale);
+		
+		pos = new Vector3(((c + 1) - (full_col * 0.5f)) * view_scale, (r - (full_row * 0.5f)) * view_scale, 0.0f);
+		create_map_element("templates/items/life", pos, size_scale);
+
+		pos = new Vector3(((c + 2) - (full_col * 0.5f)) * view_scale, (r - (full_row * 0.5f)) * view_scale, 0.0f);
+		create_map_element("templates/items/life", pos, size_scale);
+	}
+	
+	private void create_dead_ghost(int full_row, int full_col, int r, int c, float view_scale, float size_scale)
+	{
+		Vector3 pos = new Vector3((c - (full_col * 0.5f)) * view_scale, (r - (full_row * 0.5f)) * view_scale, 0.0f);
+		create_map_element("templates/characters/enemies/enemy_dead", pos, size_scale);
+	}
+	
+	private void create_dead_player(int full_row, int full_col, int r, int c, float view_scale, float size_scale)
+	{
+		Vector3 pos = new Vector3((c - (full_col * 0.5f)) * view_scale, (r - (full_row * 0.5f)) * view_scale, 0.0f);
+		create_map_element("templates/characters/player/player_dead", pos, size_scale);
+	}
+	
+	private void create_bonus(int full_row, int full_col, int r, int c, float view_scale, float size_scale)
+	{
+		Vector3 pos = new Vector3((c - (full_col * 0.5f)) * view_scale, (r - (full_row * 0.5f)) * view_scale, 0.0f);
+		create_map_element("templates/items/bonus", pos, size_scale);
+		
+		pos = new Vector3(((c + 1) - (full_col * 0.5f)) * view_scale, (r - (full_row * 0.5f)) * view_scale, 0.0f);
+		create_map_element("templates/items/bonus", pos, size_scale);
+
+		pos = new Vector3(((c + 2) - (full_col * 0.5f)) * view_scale, (r - (full_row * 0.5f)) * view_scale, 0.0f);
+		create_map_element("templates/items/bonus", pos, size_scale);
+		
+	}
+	
     // Start is called before the first frame update
     void Start()
 	{		
@@ -260,7 +321,7 @@ public class LevelGenerator : MonoBehaviour
 		int long_side = (full_row > full_col)? full_row : full_col;
 		float view_scale = Camera.main.orthographicSize / long_side; 
     	
-		float size_scale = 0.55f;
+		float size_scale = 0.66f;
     	
 		create_quadrant_map(level_map, 0, view_scale, size_scale);
 		
@@ -299,7 +360,17 @@ public class LevelGenerator : MonoBehaviour
 		}
 		
 		create_quadrant_map(level_map, 2, view_scale, size_scale);
-    }
+		
+		create_player(full_row, full_col, 24, 1, view_scale, size_scale);
+		create_ghosts(full_row, full_col, full_row / 2, full_col / 2, view_scale, size_scale);
+		
+		create_life_indicator(full_row, full_col, -1, 0, view_scale, size_scale);
+
+		create_bonus(full_row, full_col, 0, 0, view_scale, size_scale);
+
+		create_dead_player(full_row, full_col, full_row / 2 + 2, full_col / 2 + 2, view_scale, size_scale);
+		create_dead_ghost(full_row, full_col, full_row / 2 - 2, full_col / 2, view_scale, size_scale);
+	}
 
     // Update is called once per frame
     void Update()
