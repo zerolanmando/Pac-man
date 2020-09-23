@@ -11314,12 +11314,12 @@ public class FGTextEditor
 			if (Event.current.keyCode == KeyCode.F3 && !EditorGUI.actionKey ||
 				isOSX && Event.current.keyCode == KeyCode.G && EditorGUI.actionKey)
 			{
-				if (Event.current.shift)
-					SearchPrevious();
-				else
-					SearchNext();
+				//if (Event.current.shift)
+				//	SearchPrevious();
+				//else
+				//	SearchNext();
 				
-				Event.current.Use();
+				//Event.current.Use();
 			}
 		}
 
